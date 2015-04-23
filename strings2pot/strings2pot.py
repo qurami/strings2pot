@@ -140,9 +140,13 @@ def run(sourceFile, destinationFile):
         return False, "File format not recognized for source file %s\n" % (sourceFile)
 
 
-if __name__ == "__main__":
+def main():
     if len(sys.argv) == 3:
         output, message = run(sys.argv[1], sys.argv[2])
         print message
     else:
         _usage()
+
+
+if __name__ == '__main__':
+    main()
