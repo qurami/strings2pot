@@ -37,11 +37,25 @@ def _init_pot(potFilePath):
     return True
 
 
-def _parse_context_string(string):
+def _create_context_id(string):
+    """
+    Context strings will be used as string keys,
+    so it is important to keep them unique from others
+    """
+
     s = string.replace(' ', '_')  # convert spaces to underscores
-    s = re.sub(r'\W', '', s)  # strip any NON word char
-    s = re.sub(r'^\d+', '', s)  # strip digits at the beginning of a string
-    s = "\"%s\"" % s.upper()  # uppercase everything
+    s = re.sub(r'\W', '', s)      # strip any NON-word char
+    s = re.sub(r'^\d+', '', s)    # strip digits at the beginning of a string
+    s = s.upper()                 # uppercase everything
+
+    h1 = hashlib.md5(string).hexdigest()[0:5]
+    h2 = hashlib.md5(string).hexdigest()[5:10]
+
+    if len(s) > 60:
+        s = s[:55]
+
+    s = "K%s_%s_%s" % (h1, s, h2)  # on Android, keys cannot begin with digits
+
     return s
 
 
@@ -91,10 +105,10 @@ def extract_for_android(sourceFile, destinationFile):
 
         for el in root.findall('./string'):
             counter += 1
-            content = "\n#: %s:%d\nmsgctxt %s\nmsgid %s\nmsgstr \"\"\n" % (
+            content = "\n#: %s:%d\nmsgctxt \"%s\"\nmsgid %s\nmsgstr \"\"\n" % (
                 sourceFile,
                 counter,
-                _parse_context_string(el.attrib.get('name')),
+                el.attrib.get('name', _create_context_id(el.text)),
                 _parse_string_for_android(el.text))
             pot.write(content)
 
@@ -105,7 +119,7 @@ def extract_for_apple(sourceFile, destinationFile):
     if not _init_pot(destinationFile):
         return False, "Unable to initialize destination file"
 
-    pattern = r"\"(?P<msgctxt>.*)\" = \"(?P<msgid>.*)\";"
+    pattern = r"\"(?P<msgid>.*)\" = \"(?P<msgstr>.*)\";"
     prog = re.compile(pattern)
 
     with open(destinationFile, 'a') as pot:
@@ -121,7 +135,7 @@ def extract_for_apple(sourceFile, destinationFile):
                     content = "\n#: %s:%d\nmsgctxt %s\nmsgid %s\nmsgstr \"\"\n" % (
                         sourceFile,
                         counter,
-                        _parse_context_string(result['msgctxt']),
+                        _create_context_id(result['msgid']),
                         _parse_string_for_apple(result['msgid']))
                     pot.write(content)
 
