@@ -134,7 +134,7 @@ def extract_for_apple(sourceFile, destinationFile):
 
                 if match:
                     result = match.groupdict()
-                    content = "\n#: %s:%d\nmsgctxt %s\nmsgid %s\nmsgstr \"\"\n" % (
+                    content = "\n#: %s:%d\nmsgctxt \"%s\"\nmsgid %s\nmsgstr \"\"\n" % (
                         sourceFile,
                         counter,
                         _create_context_id(result['msgid']),
