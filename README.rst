@@ -9,7 +9,7 @@ Installation
 
 ::
 
-  pip install git+ssh://git@github.com/qurami/strings2pot.git
+  pip install strings2pot
 
 
 Command line usage
