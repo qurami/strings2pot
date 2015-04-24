@@ -62,7 +62,7 @@ def _create_context_id(string):
 
 def _parse_string_for_android(string):
     s = string.replace("\\'", "'")
-    s = string.replace("\"", "\\\"")
+    s = s.replace("\"", "\\\"")
     s = s.replace("\\n", "\n")
     s = re.sub(r'%\d\$s', '%s', s)
     s = re.sub(r'%\d\$d', '%d', s)
