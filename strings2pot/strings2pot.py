@@ -5,6 +5,7 @@ import os
 import re
 import time
 import datetime
+import hashlib
 import xml.etree.ElementTree as ET
 
 POT_HEADER = """msgid ""
