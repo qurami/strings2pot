@@ -83,6 +83,7 @@ def _parse_string_for_android(string):
 def _parse_string_for_apple(string):
     s = string.replace("\\'", "'")
     s = s.replace("\\n", "\n")
+    s = s.replace('%@', '%s')
 
     if "\n" in s:
         s = s.replace("\n", "\\n\n")
