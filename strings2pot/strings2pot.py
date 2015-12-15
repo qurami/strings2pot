@@ -107,12 +107,15 @@ def extract_for_android(sourceFile, destinationFile):
         counter = 3
 
         for el in root.findall('./string'):
+            parsed_string = _parse_string_for_android(el.text)
+            message_id = parsed_string[1:len(parsed_string)-1]
+
             counter += 1
             content = "\n#: %s:%d\nmsgctxt \"%s\"\nmsgid %s\nmsgstr \"\"\n" % (
                 sourceFile,
                 counter,
-                el.attrib.get('name', _create_context_id(el.text)),
-                _parse_string_for_android(el.text))
+                el.attrib.get('name', _create_context_id(message_id)),
+                parsed_string )
             pot.write(content)
 
     return True, "OK"
@@ -135,11 +138,15 @@ def extract_for_apple(sourceFile, destinationFile):
 
                 if match:
                     result = match.groupdict()
+
+                    parsed_string = _parse_string_for_apple(result['msgid'])
+                    message_id = parsed_string[1:len(parsed_string)-1]
+
                     content = "\n#: %s:%d\nmsgctxt \"%s\"\nmsgid %s\nmsgstr \"\"\n" % (
                         sourceFile,
                         counter,
-                        _create_context_id(result['msgid']),
-                        _parse_string_for_apple(result['msgid']))
+                        _create_context_id(message_id),
+                        parsed_string )
                     pot.write(content)
 
     return True, "OK"
