@@ -35,8 +35,6 @@ class String2PotConverter:
             self.extractor = android.AndroidExtractor(source_file, destination_file, self._create_context_id)
         elif os.path.splitext(source_file)[1] == ".strings":
             self.extractor = ios.iOSExtractor(source_file, destination_file, self._create_context_id)
-        #elif os.path.splitext(source_file)[1] == ".arb":
-        #    self.extractor = ArbExtractor()
         else:
             raise Exception("File format not recognized for source file %s" % (source_file))
 
