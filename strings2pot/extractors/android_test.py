@@ -14,7 +14,7 @@ class AndroidExtractorTest(unittest.TestCase):
         with open(self.mock_source_file, 'a') as source_file:
             source_file.write("""<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="string_name">Hello %1$s, nice to see you here!</string>
+  <string name="string_name">Hello "%1$s", nice to see you here!</string>
 </resources>
             """)
     
@@ -43,14 +43,14 @@ class AndroidExtractorTest(unittest.TestCase):
         single_line_string = "\' \" %1$d %2$s"
         self.assertEqual(
             sut.parse_string(single_line_string),
-            '"\' \\" %d %s"'
+            '"\' \" %d %s"'
         )
 
         multi_line_string = "\' \" \\n %1$s %1$d"
         self.assertEqual(
             sut.parse_string(multi_line_string),
             '''""
-"\' \\" \\n"
+"\' \" \\n"
 " %s %d"'''
         )
     
@@ -73,7 +73,7 @@ class AndroidExtractorTest(unittest.TestCase):
                 '''
 #: mock_source_android.xml:3
 msgctxt "MOCK_CONTEXT_ID"
-msgid "Hello %s, nice to see you here!"
+msgid "Hello \"%s\", nice to see you here!"
 msgstr ""
 '''
             )
