@@ -31,7 +31,7 @@ class AndroidExtractor:
     def run(self):
         with open(self.destination_file, 'a') as pot:
             root = ET.parse(self.source_file)
-            counter = 3
+            counter = 2
 
             for el in root.findall('./string'):
                 parsed_string = self.parse_string(el.text)
