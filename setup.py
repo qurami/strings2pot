@@ -6,7 +6,7 @@
     This utility helps you to get localization strings
     from your Apple or Android applications.
 
-    :copyright: (c) 2015 Qurami srl.
+    :copyright: (c) 2016 Qurami srl.
     :license: MIT, see LICENSE for more details.
 """
 
@@ -34,7 +34,7 @@ setup(
     description='Converts Apple .strings or Android/Java .xml files to POT gettext files.',
     long_description=LONG_DESCRIPTION,
     author='Gianfranco Reppucci',
-    author_email='gianfranco.reppucci@qurami.net',
+    author_email='gianfranco.reppucci@qurami.com',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
