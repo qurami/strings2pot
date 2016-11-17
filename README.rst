@@ -1,7 +1,7 @@
 strings2pot
 ===========
 
-strings2pot is useful to convert Apple .strings or Android/Java .xml files to POT gettext files.
+strings2pot is useful to convert Apple .strings, Android/Java .xml or Google app resource bundle .arb files to POT gettext files.
 
 
 Installation
