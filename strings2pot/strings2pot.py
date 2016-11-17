@@ -7,21 +7,21 @@ import time
 import datetime
 import hashlib
 
-from extractors import android, ios
+from extractors import android, ios, arb
 
 class String2PotConverter:
     POT_HEADER = """msgid ""
-    msgstr ""
-    "Project-Id-Version: PROJECT VERSION\\n"
-    "Report-Msgid-Bugs-To: EMAIL@ADDRESS\\n"
-    "POT-Creation-Date: %s\\n"
-    "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
-    "Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"
-    "Language-Team: LANGUAGE <LL@li.org>\\n"
-    "MIME-Version: 1.0\\n"
-    "Content-Type: text/plain; charset=utf-8\\n"
-    "Content-Transfer-Encoding: 8bit\\n"
-    "Generated-By: strings2pot\\n"
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\\n"
+"POT-Creation-Date: %s\\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"
+"Language-Team: LANGUAGE <LL@li.org>\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=utf-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Generated-By: strings2pot\\n"
     """
     extractor = None
 
@@ -35,6 +35,8 @@ class String2PotConverter:
             self.extractor = android.AndroidExtractor(source_file, destination_file, self._create_context_id)
         elif os.path.splitext(source_file)[1] == ".strings":
             self.extractor = ios.iOSExtractor(source_file, destination_file, self._create_context_id)
+        elif os.path.splitext(source_file)[1] == ".arb":
+            self.extractor = arb.ArbExtractor(source_file, destination_file, self._create_context_id)
         else:
             raise Exception("File format not recognized for source file %s" % (source_file))
 

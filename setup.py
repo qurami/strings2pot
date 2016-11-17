@@ -31,7 +31,7 @@ setup(
     version=VERSION,
     url='http://qurami.com/',
     license='MIT',
-    description='Converts Apple .strings or Android/Java .xml files to POT gettext files.',
+    description='Converts Apple .strings, Android/Java .xml or Google app resource bundle .arb files to POT gettext files.',
     long_description=LONG_DESCRIPTION,
     author='Gianfranco Reppucci',
     author_email='gianfranco.reppucci@qurami.com',
