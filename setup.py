@@ -47,7 +47,9 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     packages=['strings2pot'],
-    package_data={},
+    package_data={
+        'strings2pot': ['extractors/*']
+    },
     zip_safe=False,
     install_requires=REQUIREMENTS,
     entry_points={
