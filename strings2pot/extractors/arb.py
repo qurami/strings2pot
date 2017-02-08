@@ -3,6 +3,7 @@
 Creates a POT file from Dart's ARB file.
 '''
 
+import io
 import re
 import json
 
@@ -71,10 +72,10 @@ class ArbExtractor(object):
         '''
         Extractor main method
         '''
-        with open(self.destination_file, 'a') as pot:
+        with io.open(self.destination_file, 'a', encoding='utf-8') as pot:
             # open the arb file and convert it to a dictionary
             # using json.load (arb is JSON in fact)
-            with open(self.source_file, 'r') as source:
+            with io.open(self.source_file, 'r', encoding='utf-8') as source:
                 source_as_dict = json.load(source)
 
             # parse the arb dictionary
@@ -105,11 +106,29 @@ class ArbExtractor(object):
                         parsed_string = self.parse_string(string, placeholders)
                         message_id = parsed_string[1:len(parsed_string)-1]
 
-                        content = "\n#: %s:%s\nmsgctxt \"%s\"\nmsgid %s\nmsgstr \"\"\n" % (
-                            self.source_file,
-                            key,
-                            self._create_context_id(message_id),
-                            parsed_string
-                        )
-                        pot.write(content)
+                        try:
+                            entry_header = "\n#: %s:%s" % (self.source_file, key)
+                            pot.write(entry_header)
+                        except Exception, e:
+                            print "Warning: exception found when writing header:", e
+
+                        pot.write(u"\nmsgctxt \"")
+
+                        try:
+                            pot.write(self._create_context_id(message_id))
+                        except Exception, e:
+                            print "Fatal: got exception when writing string:", e
+                            raise e
+
+                        pot.write(u"\"")
+
+                        pot.write(u"\nmsgid ")
+
+                        try:
+                            pot.write(parsed_string)
+                        except Exception, e:
+                            print "Warning: skipping string, got exception:", e
+                            pot.write("\"\"")
+
+                        pot.write(u"\nmsgstr \"\"\n")
             pot.close()

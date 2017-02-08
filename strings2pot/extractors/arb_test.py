@@ -8,7 +8,7 @@ class ArbExtractorTest(unittest.TestCase):
     def setUp(self):
         self.mock_source_file = 'mock_source_arb.arb'
         self.mock_destination_file = 'mock_destination_arb.pot'
-        def mock_context_id_generator(s): return 'MOCK_CONTEXT_ID'
+        def mock_context_id_generator(s): return u'MOCK_CONTEXT_ID'
         self.mock_context_id_generator = mock_context_id_generator
 
         with open(self.mock_source_file, 'a') as source_file:
