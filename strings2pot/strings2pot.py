@@ -48,11 +48,23 @@ msgstr ""
     def convert(self):
         self.extractor.run()
 
+    def _clean_string(self, string):
+        """
+        Removes non ASCII chars from a string
+        """
+        clean_string = ""
+        for char in string:
+            if ord(char) < 127:
+                clean_string += char
+
+        return clean_string
+
     def _create_context_id(self, string):
         """
         Context strings will be used as string keys,
         so it is important to keep them unique from others
         """
+        string = self._clean_string(string)
 
         s = string.replace(' ', '_')  # convert spaces to underscores
         s = re.sub(r'\W', '', s)      # strip any NON-word char
