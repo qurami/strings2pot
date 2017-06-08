@@ -11,7 +11,7 @@ class AndroidExtractor:
     
     def parse_string(self, string):
         s = string.replace("\\'", "'")
-        s = string.replace("\"", "\\\"")
+        s = s.replace("\"", "\\\"")
         s = s.replace("\\n", "\n")
         s = re.sub(r'%\d\$s', '%s', s)
         s = re.sub(r'%\d\$d', '%d', s)

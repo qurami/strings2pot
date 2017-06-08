@@ -40,7 +40,7 @@ class AndroidExtractorTest(unittest.TestCase):
     def test_parse_string(self):
         sut = android.AndroidExtractor('', '', self.mock_context_id_generator)
 
-        single_line_string = "\' \" %1$d %2$s"
+        single_line_string = "\\' \" %1$d %2$s"
         self.assertEqual(
             sut.parse_string(single_line_string),
             '"\' \\\" %d %s"'
